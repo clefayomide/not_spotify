@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+@font-face {
+  font-family: Gotham-Bold;
+  src: url(./assets/Gotham-Spotify-Font/GothamBold.ttf);
+}
+
+@font-face {
+  font-family: Gotham-Book;
+  src: url(./assets/Gotham-Spotify-Font/GothamBook.ttf);
+}
+
+@font-face {
+  font-family: Gotham-Light;
+  src: url(./assets/Gotham-Spotify-Font/GothamLight.ttf);
+}
+
+@font-face {
+  font-family: Gotham-Medium_1;
+  src: url(./assets/Gotham-Spotify-Font/GothamMedium_1.ttf);
+}
+
+@font-face {
+  font-family: Gotham-Medium;
+  src: url(./assets/Gotham-Spotify-Font/GothamMedium.ttf);
+}
