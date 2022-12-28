@@ -14,14 +14,27 @@ import show_dem_camp from "../../assets/show_dem_camp.jpeg";
 import wizkid from "../../assets/wizkid.jpeg";
 import { v4 as uuidv4 } from "uuid";
 
-const Home = () => {
+interface Media {
+  isPlaying: boolean;
+  play: any;
+  pause: any;
+}
+
+const Home = (props: Media) => {
   return (
-    <div>
+    <div className="relative">
       <section className="mt-20">
         <Greeting />
         <div className="flex flex-wrap mt-5 gap-3">
           {recently_played.map(({ image, title }) => (
-            <RecentlyPlayedCard image={image} title={title} key={uuidv4()} />
+            <RecentlyPlayedCard
+              image={image}
+              title={title}
+              key={uuidv4()}
+              play={props.play}
+              pause={props.pause}
+              isPlaying={props.isPlaying}
+            />
           ))}
         </div>
       </section>
@@ -38,21 +51,33 @@ const Home = () => {
           }
           image={wrapped}
           eclipse={true}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Nigerian Pop Mix"}
           paragrapgh_text={"Nigerian Pop music picked just for you"}
           image={nigerian_pop}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Pop Mix"}
           paragrapgh_text={"OneRepublic, Train, benny blanco and more"}
           image={pop_mix}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Rap Mix"}
           paragrapgh_text={"Rap music picked just for you"}
           image={rap_mix}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
       </Curated>
 
@@ -67,21 +92,33 @@ const Home = () => {
           }
           image={giveon}
           eclipse={true}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Nigerian Pop Mix"}
           paragrapgh_text={"Nigerian Pop music picked just for you"}
           image={show_dem_camp}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Pop Mix"}
           paragrapgh_text={"OneRepublic, Train, benny blanco and more"}
           image={khalid}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
         <Card
           header_text={"Rap Mix"}
           paragrapgh_text={"Rap music picked just for you"}
           image={wizkid}
+          isPlaying={props.isPlaying}
+          play={props.play}
+          pause={props.pause}
         />
       </Curated>
     </div>

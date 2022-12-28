@@ -1,13 +1,35 @@
 import gsap from "gsap";
 import logo from "../assets/logo.svg";
-import { useRef, useLayoutEffect } from "react";
+import { useRef, useLayoutEffect, useState, useEffect } from "react";
 import Nav from "../components/nav/Nav";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../components/content-area/Home";
+import { tracks } from "../tracks";
 
 const Home = () => {
   const homePageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
+  const [current_track, set_current_track] = useState(0);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [audio, setAudio] = useState(
+    new Audio(tracks[current_track].track_link)
+  );
+
+  useEffect(() => {
+    return () => {
+      audio.pause();
+    };
+  }, []);
+
+  const play = () => {
+    setIsPlaying(true);
+    audio.play();
+  };
+
+  const pause = () => {
+    setIsPlaying(false);
+    audio.pause();
+  };
 
   useLayoutEffect(() => {
     const tl = gsap.timeline();
@@ -43,7 +65,12 @@ const Home = () => {
           {/* content area */}
           <section className="overflow-y-scroll scrollbar-thumb-lighter_dark scrollbar-thin  pl-5 pr-5 pb-5 h-full w-full lg:w-[60%] bg-gradient-to-t from-black via-black to-light_dark">
             <Routes>
-              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/"
+                element={
+                  <HomePage isPlaying={isPlaying} play={play} pause={pause} />
+                }
+              />
             </Routes>
           </section>
 

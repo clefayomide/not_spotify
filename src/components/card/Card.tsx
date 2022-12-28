@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import PlayButton from "../PlayButton";
+import PlayButton from "../button/PlayButton";
+import PauseButton from "../button/PauseButton";
 import { Heading, Paragraph } from "../typography/Typography";
 
 const Card = (props: {
@@ -7,6 +8,9 @@ const Card = (props: {
   header_text: string;
   paragrapgh_text: string;
   eclipse?: boolean;
+  isPlaying: boolean;
+  play: any;
+  pause: any;
 }) => {
   const [show_play_button, set_show_play_button] = useState(false);
   return (
@@ -35,11 +39,21 @@ const Card = (props: {
         />
       </div>
       <div className="absolute top-24 right-8">
-        <PlayButton
-          backgroundColor="bg-lime_green"
-          color="text-black"
-          show={show_play_button}
-        />
+        {props.isPlaying ? (
+          <PauseButton
+            backgroundColor="bg-lime_green"
+            color="text-black"
+            show={show_play_button}
+            pause={props.pause}
+          />
+        ) : (
+          <PlayButton
+            backgroundColor="bg-lime_green"
+            color="text-black"
+            show={show_play_button}
+            play={props.play}
+          />
+        )}
       </div>
     </div>
   );
