@@ -1,16 +1,13 @@
-
-
 const PauseButton = (props: {
   backgroundColor: string;
   color: string;
-  show: boolean;
+  show?: boolean;
   pause: any;
-  
 }) => {
   return (
     <div
       className={`${
-        props.show ? "block" : "hidden"
+        props.hasOwnProperty("show") ? (props.show ? "block" : "hidden") : ""
       } w-[40px] h-[40px] cursor-pointer flex justify-center items-center rounded-full ${
         props.backgroundColor
       } ${props.color} shadow-md`}

@@ -5,14 +5,18 @@ import Nav from "../components/nav/Nav";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../components/content-area/Home";
 import { tracks } from "../tracks";
+import Control from "../components/control/Control";
 
 const Home = () => {
   const homePageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const [current_track, set_current_track] = useState(0);
+  const [current_track_index, set_current_track_index] = useState(0);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, setAudio] = useState(
-    new Audio(tracks[current_track].track_link)
+  const [audio, _] = useState(
+    new Audio(tracks[current_track_index].track_link)
+  );
+  const [current_track_image, set_current_track_image] = useState(
+    tracks[current_track_index].cover_image
   );
 
   useEffect(() => {
@@ -63,7 +67,7 @@ const Home = () => {
           </section>
 
           {/* content area */}
-          <section className="overflow-y-scroll scrollbar-thumb-lighter_dark scrollbar-thin  pl-5 pr-5 pb-5 h-full w-full lg:w-[60%] bg-gradient-to-t from-black via-black to-light_dark">
+          <section className="overflow-y-scroll scrollbar-thumb-lighter_dark scrollbar-thin  pl-5 pr-5 pb-36 h-full w-full lg:w-[60%] bg-gradient-to-t from-black via-black to-light_dark">
             <Routes>
               <Route
                 path="/"
@@ -77,6 +81,15 @@ const Home = () => {
           {/* friend activity */}
           <section className="hidden lg:block h-full w-[20%]"></section>
         </div>
+        <Control
+          image={current_track_image}
+          title={tracks[current_track_index].title}
+          artist={tracks[current_track_index].artist}
+          play={play}
+          isPlaying={isPlaying}
+          pause={pause}
+          set_current_track_index={set_current_track_index}
+        />
       </main>
     </div>
   );
