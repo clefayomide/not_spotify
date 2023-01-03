@@ -11,28 +11,51 @@ const Home = () => {
   const homePageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const [current_track_index, set_current_track_index] = useState(0);
+  const [all_song, set_all_song] = useState(tracks);
   const [isPlaying, setIsPlaying] = useState(false);
-  const [audio, _] = useState(
-    new Audio(tracks[current_track_index].track_link)
-  );
-  const [current_track_image, set_current_track_image] = useState(
-    tracks[current_track_index].cover_image
-  );
+  const [current_song, set_current_song] = useState<{
+    title: string;
+    artist: string;
+    cover_image: any;
+    track_link: string;
+    progress?: number;
+    length?: number;
+  }>(all_song[current_track_index]);
+  const audio = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
     return () => {
-      audio.pause();
+      audio.current != null && audio.current.pause();
     };
   }, []);
 
+  useEffect(() => {
+    isPlaying ? audio.current?.play() : audio.current?.pause();
+  }, [isPlaying]);
+
   const play = () => {
     setIsPlaying(true);
-    audio.play();
   };
 
   const pause = () => {
     setIsPlaying(false);
-    audio.pause();
+  };
+
+  const on_time_update = () => {
+    if (audio.current != null) {
+      const duration = audio.current?.duration;
+      const current_time = audio.current?.currentTime;
+
+      set_current_song({
+        ...current_song,
+        progress: (current_time / duration) * 100,
+        length: duration,
+      });
+    }
+  };
+
+  const on_ended = () => {
+    set_current_track_index(current_track_index + 1);
   };
 
   useLayoutEffect(() => {
@@ -68,6 +91,12 @@ const Home = () => {
 
           {/* content area */}
           <section className="overflow-y-scroll scrollbar-thumb-lighter_dark scrollbar-thin  pl-5 pr-5 pb-36 h-full w-full lg:w-[60%] bg-gradient-to-t from-black via-black to-light_dark">
+            <audio
+              src={current_song.track_link}
+              ref={audio}
+              onTimeUpdate={on_time_update}
+              onEnded={on_ended}
+            />
             <Routes>
               <Route
                 path="/"
@@ -82,13 +111,16 @@ const Home = () => {
           <section className="hidden lg:block h-full w-[20%]"></section>
         </div>
         <Control
-          image={current_track_image}
-          title={tracks[current_track_index].title}
-          artist={tracks[current_track_index].artist}
+          image={current_song.cover_image}
+          progress={current_song.progress}
+          title={current_song.title}
+          artist={current_song.artist}
           play={play}
           isPlaying={isPlaying}
           pause={pause}
           set_current_track_index={set_current_track_index}
+          audio={audio}
+          current_song={current_song}
         />
       </main>
     </div>

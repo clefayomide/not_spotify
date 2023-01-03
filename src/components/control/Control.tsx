@@ -10,6 +10,9 @@ const Control = (props: {
   isPlaying: boolean;
   pause: any;
   set_current_track_index: any;
+  audio: object;
+  progress?: number;
+  current_song: object;
 }) => {
   return (
     <section className="flex items-center w-full h-24 bg-[#181818]  absolute bottom-0">
@@ -31,6 +34,9 @@ const Control = (props: {
           isPlaying={props.isPlaying}
           pause={props.pause}
           set_current_track_index={props.set_current_track_index}
+          audio={props.audio}
+          progress={props.progress}
+          current_song={props.current_song}
         />
 
         <section className="w-[28%]"></section>
