@@ -10,7 +10,6 @@ import Control from "../components/control/Control";
 const Home = () => {
   const homePageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
-  const [current_track_index, set_current_track_index] = useState(0);
   const [all_song, set_all_song] = useState(tracks);
   const [isPlaying, setIsPlaying] = useState(false);
   const [current_song, set_current_song] = useState<{
@@ -20,7 +19,7 @@ const Home = () => {
     track_link: string;
     progress?: number;
     length?: number;
-  }>(all_song[current_track_index]);
+  }>(all_song[0]);
   const audio = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -31,7 +30,7 @@ const Home = () => {
 
   useEffect(() => {
     isPlaying ? audio.current?.play() : audio.current?.pause();
-  }, [isPlaying]);
+  }, [isPlaying, current_song]);
 
   const play = () => {
     setIsPlaying(true);
@@ -48,14 +47,21 @@ const Home = () => {
 
       set_current_song({
         ...current_song,
-        progress: (current_time / duration) * 100,
+        progress: Math.round((current_time / duration) * 100),
         length: duration,
       });
     }
   };
 
   const on_ended = () => {
-    set_current_track_index(current_track_index + 1);
+    const current_song_index = all_song.findIndex(
+      (song) => song.title === current_song.title
+    );
+    if (current_song_index === all_song.length - 1) {
+      set_current_song(all_song[0]);
+    } else {
+      set_current_song(all_song[current_song_index + 1]);
+    }
   };
 
   useLayoutEffect(() => {
@@ -117,10 +123,12 @@ const Home = () => {
           artist={current_song.artist}
           play={play}
           isPlaying={isPlaying}
+          set_is_playing={setIsPlaying}
           pause={pause}
-          set_current_track_index={set_current_track_index}
           audio={audio}
           current_song={current_song}
+          all_song={all_song}
+          set_current_song={set_current_song}
         />
       </main>
     </div>

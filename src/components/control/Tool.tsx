@@ -1,33 +1,44 @@
 import React, { useRef } from "react";
 import PauseButton from "../button/PauseButton";
 import PlayButton from "../button/PlayButton";
-import { tracks } from "../../tracks";
+import { Songs } from "./Control";
 
 const Tool = (props: {
-  play: any;
+  play: Function;
   isPlaying: boolean;
-  pause: any;
-  set_current_track_index: any;
+  pause: Function;
+  set_is_playing: React.Dispatch<React.SetStateAction<boolean>>;
   audio: any;
   progress?: number;
   current_song: any;
+  all_song: Songs[];
+  set_current_song: React.Dispatch<React.SetStateAction<Songs>>;
 }) => {
   const seek_container = useRef<HTMLDivElement>(null);
 
   const handlePrevious = () => {
-    props.audio.current.pause();
-    props.set_current_track_index((prev: number) =>
-      prev === 0 ? tracks.length - 1 : prev - 1
+    const current_song_index = props.all_song.findIndex(
+      (song) => song.title == props.current_song?.title
     );
-    props.audio.current.play();
+    if (current_song_index == 0) {
+      props.set_current_song(props.all_song[props.all_song.length - 1]);
+    } else {
+      props.set_current_song(props.all_song[current_song_index - 1]);
+    }
+    props.audio.current.currentTime = 0;
   };
 
   const handleNext = () => {
-    props.audio.current.pause();
-    props.set_current_track_index((prev: number) =>
-      prev === tracks.length - 1 ? 0 : prev + 1
+    const current_song_index = props.all_song.findIndex(
+      (song) => song.title == props.current_song.title
     );
-    props.audio.current.pause();
+    if (current_song_index == props.all_song.length - 1) {
+      props.set_current_song(props.all_song[0]);
+    } else {
+      props.set_current_song(props.all_song[current_song_index + 1]);
+    }
+    props.audio.current.currentTime = 0;
+    props.set_is_playing(true);
   };
 
   const handleSeek = (e: any) => {
@@ -49,7 +60,7 @@ const Tool = (props: {
           width="25"
           height="25"
           fill="currentColor"
-          className="bi bi-skip-start-fill"
+          className="bi bi-skip-start-fill cursor-pointer"
           viewBox="0 0 16 16"
           onClick={handlePrevious}
         >
@@ -75,7 +86,7 @@ const Tool = (props: {
           width="25"
           height="25"
           fill="currentColor"
-          className="bi bi-skip-end-fill"
+          className="bi bi-skip-end-fill cursor-pointer"
           viewBox="0 0 16 16"
           onClick={handleNext}
         >
@@ -87,12 +98,12 @@ const Tool = (props: {
         onClick={handleSeek}
         ref={seek_container}
       >
-        {props.progress && (
-          <div
-            className={`h-full bg-green-500`}
-            style={{ width: `${props.progress + "%"}` }}
-          ></div>
-        )}
+        <div
+          className={`h-full bg-green-500`}
+          style={{
+            width: `${props.progress}%`,
+          }}
+        ></div>
       </div>
     </div>
   );
