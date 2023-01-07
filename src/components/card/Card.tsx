@@ -15,7 +15,7 @@ const Card = (props: {
   const [show_play_button, set_show_play_button] = useState(false);
   return (
     <div
-      className="w-[48%] md:w-[23.5%] lg:w-[24%] flex-wrap relative ipad_max:h-[230px] ipad_min:h-[260px] lg:h-[260px] xl:h-[240px] p-3 bg-light_dark hover:bg-lighter_dark rounded"
+      className="w-[48%] md:w-[23.5%] lg:w-[24%] flex-wrap relative ipad_max:h-[230px] ipad_min:h-[260px] lg:h-[280px] xl:h-[240px] p-3 bg-light_dark hover:bg-lighter_dark rounded"
       onMouseEnter={() => set_show_play_button(true)}
       onMouseLeave={() => set_show_play_button(false)}
     >
@@ -31,6 +31,7 @@ const Card = (props: {
               ? `${props.header_text.substring(0, 15)}...`
               : props.header_text
           }`}
+          classNames="lg:text-xs xl:auto"
         />
         <Paragraph
           text={`${props.paragrapgh_text.substring(0, 48)}...`}

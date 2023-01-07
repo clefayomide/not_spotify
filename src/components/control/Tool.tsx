@@ -53,7 +53,7 @@ const Tool = (props: {
   };
 
   return (
-    <div className="w-[40%] flex gap-4 flex-col re">
+    <div className="w-[40%] flex gap-4 flex-col">
       <section className="flex gap-5 justify-center items-center relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
