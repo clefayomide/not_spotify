@@ -27,7 +27,7 @@ export const Paragraph = (props: {
     <p
       className={`${props.size ? props.size : "text-sm"} ${
         props.color ? props.color : "text-gray-500"
-      } font-Gotham_Light font-bold`}
+      } font-Gotham_Light font-bold ${props.classNames}`}
     >
       {props.text}
     </p>

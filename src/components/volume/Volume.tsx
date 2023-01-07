@@ -37,7 +37,7 @@ const Volume = (props: { handle_vol: any; audio: any }) => {
           max="10"
           onChange={props.handle_vol}
           style={{ backgroundSize: `${vol_width}% 100%` }}
-          className={`self-end in-range:border-green-500 w-1/2 w h-1 relative z-20 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700`}
+          className={`self-end in-range:border-green-500 w-1/2 border-2 h-1 relative z-20 bg-gray-200 rounded-lg appearance-none cursor-pointer range-sm dark:bg-gray-700`}
         />
       </div>
     </section>
