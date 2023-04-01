@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo, ReactNode, useMemo } from "react";
 import Curated from "../curated/Curated";
 import Greeting from "../greeting/Greeting";
 import Card from "../card/Card";
@@ -20,23 +20,29 @@ interface Media {
   pause: any;
 }
 
-const Home = (props: Media) => {
+const Home = memo((props: Media) => {
+  // bug fix
+  const recentPlayList = useMemo(() => {
+    const comps: Array<ReactNode> = [];
+    recently_played.map(({ image, title }) => {
+      comps.push(
+        <RecentlyPlayedCard
+          image={image}
+          title={title}
+          key={uuidv4()}
+          play={props.play}
+          pause={props.pause}
+          isPlaying={props.isPlaying}
+        />
+      );
+    });
+    return comps;
+  }, [props.isPlaying]);
   return (
     <div className="relative">
       <section className="mt-20">
         <Greeting />
-        <div className="flex flex-wrap mt-5 gap-3">
-          {recently_played.map(({ image, title }) => (
-            <RecentlyPlayedCard
-              image={image}
-              title={title}
-              key={uuidv4()}
-              play={props.play}
-              pause={props.pause}
-              isPlaying={props.isPlaying}
-            />
-          ))}
-        </div>
+        <div className="flex flex-wrap mt-5 gap-3">{recentPlayList}</div>
       </section>
 
       {/* curated for you */}
@@ -123,6 +129,6 @@ const Home = (props: Media) => {
       </Curated>
     </div>
   );
-};
+});
 
 export default Home;
