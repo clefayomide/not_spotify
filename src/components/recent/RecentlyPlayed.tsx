@@ -10,6 +10,7 @@ const RecentlyPlayed = (props: {
   isPlaying: boolean;
 }) => {
   const [show_play_button, set_show_play_button] = useState(false);
+
   return (
     <div
       className="w-full md:w-[48.8%] h-[55px] bg-light_dark hover:bg-lighter_dark rounded relative"
