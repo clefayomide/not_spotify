@@ -1,6 +1,6 @@
 import gsap from "gsap";
 import logo from "../assets/logo.svg";
-import { useRef, useLayoutEffect, useState, useEffect } from "react";
+import { useRef, useLayoutEffect, useState, useEffect, memo } from "react";
 import Nav from "../components/nav/Nav";
 import { Routes, Route } from "react-router-dom";
 import HomePage from "../components/content-area/Home";
@@ -11,7 +11,7 @@ import User from "../components/user-rounded/User";
 import Skeleton from "../components/skeleton/Skeleton";
 import Regular from "../components/button/Regular";
 
-const Home = () => {
+const Home = memo(() => {
   const homePageRef = useRef<HTMLDivElement>(null);
   const logoRef = useRef<HTMLDivElement>(null);
   const [all_song, set_all_song] = useState(tracks);
@@ -183,6 +183,6 @@ const Home = () => {
       </main>
     </div>
   );
-};
+});
 
 export default Home;
